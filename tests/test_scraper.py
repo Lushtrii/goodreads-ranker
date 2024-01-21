@@ -4,6 +4,12 @@ from src.goodreadsranker import scraper
 
 class TestScraper(unittest.TestCase):
 
+    def test_get_webpage_html(self):
+        #Page may change, so can't test for exact html.
+        #Just check if link is still good (i.e. doesn't throw an exception).
+        website_url = 'https://www.goodreads.com/shelf/show/personal-development'
+        scraper.get_webpage_html(website_url)
+            
     def test_extract_sub_text(self):
         text = '''<span class="greyText smallText">
                 avg rating 4.36 —
