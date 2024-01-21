@@ -11,7 +11,6 @@ def get_webpage_html():
 
 # String -> ListOfBookDicts
 def parse_data(response_html):
-
     #Soupify
     soup = BeautifulSoup(response_html, 'html.parser')
     #For each book entry, construct book dict
