@@ -4,9 +4,8 @@ import re
 import csv
 
 # Returns string
-def get_webpage_html():
-    website_url = 'https://www.goodreads.com/shelf/show/personal-development'
-    r = requests.get(website_url)
+def get_webpage_html(url):
+    r = requests.get(url)
     return r.text
 
 # String -> ListOfBookDicts
