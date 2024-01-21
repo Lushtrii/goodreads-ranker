@@ -4,6 +4,18 @@ from src.goodreadsranker import scraper
 
 class TestScraper(unittest.TestCase):
 
+    def test_extract_sub_text(self):
+        text = '''<span class="greyText smallText">
+                avg rating 4.36 —
+                796,219 ratings  —
+                published 2018
+              </span>'''
+        
+        actual_avg_rating, actual_num_ratings, actual_published_year = scraper.extract_sub_text(text)
+        self.assertEqual(actual_avg_rating, '4.36')
+        self.assertEqual(actual_num_ratings, '796,219')
+        self.assertEqual(actual_published_year, '2018')
+        
     def test_parse_data(self):
         self.maxDiff = None
         expected_output_examples = [
