@@ -1,5 +1,7 @@
 import unittest
 
+import os
+
 from src.goodreadsranker import scraper
 
 class TestScraper(unittest.TestCase):
@@ -58,5 +60,43 @@ class TestScraper(unittest.TestCase):
 
             self.assertEqual(output[:num_examples], expected_output_examples)
 
+    def test_write_to_csv(self):
+        book_list = [
+            {'Title': 'Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones',
+            'Author': 'James Clear',
+            'Avg rating': 4.36,
+            'Number of Ratings': 796219,
+            'Year Published': 2018},
+
+            {'Title': 'The 7 Habits of Highly Effective People: Powerful Lessons in Personal Change',
+            'Author': 'Stephen R. Covey',
+            'Avg rating': 4.16,
+            'Number of Ratings': 727556,
+            'Year Published': 1988},
+
+            {'Title': 'How to Win Friends and Influence People',
+            'Author': 'Dale Carnegie',
+            'Avg rating': 4.22,
+            'Number of Ratings': 952522,
+            'Year Published': 1936},
+
+            {'Title': 'The Subtle Art of Not Giving a F*ck: A Counterintuitive Approach to Living a Good Life',
+            'Author': 'Mark Manson',
+            'Avg rating': 3.90,
+            'Number of Ratings': 1068551,
+            'Year Published': 2016},
+        ]
+        scraper.write_to_csv(book_list, './tests/book_data.csv')
+        with open('./tests/expected_results.csv', 'r') as expected_csv, open('./tests/book_data.csv') as actual_csv:
+            expected_lines = expected_csv.readlines()
+            actual_lines = actual_csv.readlines()
+
+            for expected_line, actual_line in zip(expected_lines, actual_lines):
+                self.assertEquals(expected_line, actual_line)
+
+        #Cleanup
+        os.remove('./tests/book_data.csv')
+
+        
 if __name__ == '__main__':
     unittest.main()
