@@ -68,5 +68,5 @@ def extract_sub_text(sub_text):
 #Return list of books
     
 # TODO
-def write_to_csv(data):
+def write_to_csv(data, output_path):
     pass
