@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import re
 import csv
 
+book_attributes = ['Title', 'Author', 'Avg rating', 'Number of Ratings', 'Year Published']
+
 # Returns string
 def get_webpage_html(url):
     r = requests.get(url)
@@ -11,7 +13,6 @@ def get_webpage_html(url):
 # String -> ListOfBookDicts
 def parse_data(response_html):
     books = []
-    book_attributes = ['Title', 'Author', 'Avg rating', 'Number of Ratings', 'Year Published']
 
     #Soupify
     soup = BeautifulSoup(response_html, 'html.parser')
@@ -66,7 +67,11 @@ def extract_sub_text(sub_text):
 
 
 #Return list of books
-    
-# TODO
 def write_to_csv(data, output_path):
-    pass
+    with open(output_path, 'w', newline='') as csvfile:
+        csv_writer = csv.writer(csvfile)
+
+        csv_writer.writerow(book_attributes)
+        for book in data:
+            row_data = list(book.values())
+            csv_writer.writerow(row_data)

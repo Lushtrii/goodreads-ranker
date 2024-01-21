@@ -87,12 +87,14 @@ class TestScraper(unittest.TestCase):
             'Year Published': 2016},
         ]
         scraper.write_to_csv(book_list, './tests/book_data.csv')
-        with open('./tests/expected_results.csv', 'r') as expected_csv, open('./tests/book_data.csv') as actual_csv:
+        with open('./tests/expected_results.csv', 'r', newline='') as expected_csv, open('./tests/book_data.csv', newline='') as actual_csv:
             expected_lines = expected_csv.readlines()
             actual_lines = actual_csv.readlines()
 
             for expected_line, actual_line in zip(expected_lines, actual_lines):
-                self.assertEquals(expected_line, actual_line)
+                expected_line = expected_line.replace('\r\n', '')
+                actual_line = actual_line.replace('\r\n', '')
+                self.assertEqual(expected_line, actual_line)
 
         #Cleanup
         os.remove('./tests/book_data.csv')
