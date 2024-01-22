@@ -87,7 +87,7 @@ class TestScraper(unittest.TestCase):
             'Year Published': 2016},
         ]
         scraper.write_to_csv(book_list, './tests/book_data.csv')
-        with open('./tests/expected_results.csv', 'r', newline='') as expected_csv, open('./tests/book_data.csv', newline='') as actual_csv:
+        with open('./tests/expected_scrape_results.csv', 'r', newline='') as expected_csv, open('./tests/book_data.csv', newline='') as actual_csv:
             expected_lines = expected_csv.readlines()
             actual_lines = actual_csv.readlines()
 
