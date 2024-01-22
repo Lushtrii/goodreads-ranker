@@ -1,5 +1,6 @@
 import unittest
 import os
+import shutil
 
 from src.goodreadsranker import ranker
 
@@ -20,6 +21,9 @@ class TestRanker(unittest.TestCase):
 
     def test_add_score_to_csv(self):
         test_data_path = './tests/book_data.csv'
+
+        shutil.copy('./tests/expected_scrape_results.csv', test_data_path)
+
         ranker.add_score_to_csv(test_data_path)
 
         with open('./tests/expected_score.csv', 'r', newline='') as expected_csv, open('./tests/book_data.csv', newline='') as actual_csv:
