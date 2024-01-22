@@ -6,6 +6,50 @@ from src.goodreadsranker import scraper
 
 class TestScraper(unittest.TestCase):
 
+    def test_quality_filter_book_with_few_reviews(self):
+        book_to_score = {
+        'Title': 'Very New Book',
+        'Author': 'John Doe',
+        'Avg rating': 4.16,
+        'Number of Ratings': 12,
+        'Year Published': 2024
+        }
+
+        self.assertFalse(scraper.quality_filter(book_to_score))
+
+    def test_quality_filter_book_with_bad_reviews(self):
+        book_to_score = {
+        'Title': 'Very Controversial Book',
+        'Author': 'John Doe',
+        'Avg rating': 3.6,
+        'Number of Ratings': 1563203,
+        'Year Published': 2024
+        }
+
+        self.assertFalse(scraper.quality_filter(book_to_score))
+
+    def test_quality_filter_few_and_bad_reviews(self):
+        book_to_score = {
+        'Title': 'Very Bad Book',
+        'Author': 'John Doe',
+        'Avg rating': 2.7,
+        'Number of Ratings': 12,
+        'Year Published': 2024
+        }
+
+        self.assertFalse(scraper.quality_filter(book_to_score))
+
+    def test_quality_filter_good_book(self):
+        book_to_score = {
+        'Title': 'Best Book',
+        'Author': 'John Doe',
+        'Avg rating': 4.37,
+        'Number of Ratings': 10543,
+        'Year Published': 2024
+        }
+
+        self.assertTrue(scraper.quality_filter(book_to_score))
+    
     def test_get_webpage_html(self):
         #Page may change, so can't test for exact html.
         #Just check if link is still good (i.e. doesn't throw an exception).

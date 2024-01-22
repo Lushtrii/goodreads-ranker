@@ -13,6 +13,10 @@ def get_webpage_html(url):
     r = requests.get(url)
     return r.text
 
+# Removes books that aren't well reviewed or well established enough to warrant including
+def quality_filter(book_dict, min_num_ratings=200, min_avg_rating=3.7):
+    return book_dict['Avg rating'] >= min_avg_rating and book_dict['Number of Ratings'] >= min_num_ratings
+
 # String -> ListOfBookDicts
 def parse_data(response_html):
     books = []
@@ -51,7 +55,8 @@ def parse_data(response_html):
         book_dict['Number of Ratings'] = int(num_ratings)
         book_dict['Year Published'] = int(year) if year else None
 
-        books.append(book_dict)
+        if quality_filter(book_dict):
+            books.append(book_dict)
 
     return books
 
