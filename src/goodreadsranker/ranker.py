@@ -1,8 +1,7 @@
 import csv
 
-def score():
-    #Score function: 10 * avg_rating + log_10(num_ratings)
+def score(book_row):
     pass
 
-def add_score_to_csv():
+def add_score_to_csv(csv_path):
     pass
