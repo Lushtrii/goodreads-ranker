@@ -1,7 +1,10 @@
 import requests
-from bs4 import BeautifulSoup
 import re
 import csv
+import time
+import json
+
+from bs4 import BeautifulSoup
 
 book_attributes = ['Title', 'Author', 'Avg rating', 'Number of Ratings', 'Year Published']
 
@@ -33,8 +36,11 @@ def parse_data(response_html):
         book_dict['Title'] = book_title
         book_dict['Author'] = book_element.find(class_ = 'authorName').text
 
-        sub_text = book_element.select('span.greyText.smallText')[0].text
-        avg_rating, num_ratings, year = extract_sub_text(sub_text)
+        for subtext in book_element.select('span.greyText.smallText'):
+            avg_rating, num_ratings, year = extract_sub_text(subtext.text)
+            if (avg_rating != None and num_ratings != None):
+                break
+        
         num_ratings = num_ratings.replace(',', '')
 
         # Not a big deal if year data is missing from book, but other attributes are crucial for ranking
@@ -65,7 +71,6 @@ def extract_sub_text(sub_text):
 
     return avg_rating,num_ratings,year
 
-
 #Return list of books
 def write_to_csv(data, output_path):
     with open(output_path, 'w', newline='') as csvfile:
@@ -75,3 +80,27 @@ def write_to_csv(data, output_path):
         for book in data:
             row_data = list(book.values())
             csv_writer.writerow(row_data)
+
+def scan_shelf(base_url, num_pages,  save_path):
+    total_data = []
+
+    #Read in login headers
+    with open('./login_headers.json') as login_data:
+        login_dict = json.loads(login_data.read())
+        cookies = login_dict['cookies']
+        headers = login_dict['headers']
+
+    for i in range(num_pages):
+        params = {
+            'page': str(i+1),
+        }
+
+        resp = requests.get(base_url, params=params, cookies=cookies, headers=headers)
+        request_str = resp.text
+        data = parse_data(request_str)
+        total_data += data
+
+        #Precaution not too many requests are being made at a time
+        time.sleep(1)
+
+    write_to_csv(total_data, save_path)
