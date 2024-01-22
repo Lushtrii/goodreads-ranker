@@ -26,7 +26,8 @@ class TestRanker(unittest.TestCase):
 
         ranker.add_score_to_csv(test_data_path)
 
-        with open('./tests/expected_score.csv', 'r', newline='') as expected_csv, open('./tests/book_data.csv', newline='') as actual_csv:
+        
+        with open('./tests/expected_score.csv', 'r', newline='') as expected_csv, open(test_data_path, 'r', newline='') as actual_csv:
             expected_lines = expected_csv.readlines()
             actual_lines = actual_csv.readlines()
 
@@ -35,5 +36,5 @@ class TestRanker(unittest.TestCase):
                 actual_line = actual_line.replace('\r\n', '')
                 self.assertEqual(expected_line, actual_line)
 
-        #Cleanup
+        # Cleanup
         os.remove(test_data_path)
