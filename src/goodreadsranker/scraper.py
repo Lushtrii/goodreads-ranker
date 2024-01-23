@@ -92,7 +92,11 @@ def write_to_csv(data, output_path):
 def scan_shelf(base_url, num_pages,  save_path):
     total_data = []
 
-    #Read in login headers
+    '''Login headers and cookies can be retrieved by logging into 
+    goodreads and following this: 
+    https://stackoverflow.com/questions/23102833/how-to-scrape-a-website-which-requires-login-using-python-and-beautifulsoup
+    Convert the cookies and headers dicts into objects in the login_headers.json file.
+    '''
     with open('./login_headers.json') as login_data:
         login_dict = json.loads(login_data.read())
         cookies = login_dict['cookies']
