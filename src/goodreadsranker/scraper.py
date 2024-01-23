@@ -37,6 +37,9 @@ def parse_data(response_html):
         #Strip format of book from title. E.g. (Kindle Edition)
         book_title = re.sub(r' \([\w\s]+\)', '', book_title.text)
 
+        #Causes csv to get parsed incorrectly during later stages
+        book_title = book_title.replace(';', ',')
+
         book_dict['Title'] = book_title
         book_dict['Author'] = book_element.find(class_ = 'authorName').text
 
