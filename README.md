@@ -1,5 +1,5 @@
 # goodreads-ranker
-This project scrapes and ranks self-improvment books from goodreads.com and outputs the results as a csv.
+**This project scrapes and ranks self-improvement books from goodreads.com and outputs the results as a csv.**
 
 I like reading self-improvement books, so I often look through Goodreads to either find the best of the best or look for books that have come out in the last few years that haven't gotten enough attention. Goodreads doesn't sufficiently help with this goal, and I find that its list system isn't very easy to navigate through. I attempt to solve this problem using some statistics that Goodreads assigns to each book based on user feedback, particularly, average rating and the number of ratings. My project scrapes goodreads.com's self-help section (pretending to be a logged-in user), gives the book a score, and finally outputs a csv file containing all the scraped data plus the newly created score. It also filters out books that have an average rating of < 3.7, or if they have less than 200 ratings to create a more quality set of data. 
 
