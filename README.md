@@ -13,6 +13,6 @@ The scoring function ranks books using the formula:
 - Books with a **higher rating** get a boost.
 - Books with **more reviews** get a boost.
 - Highly rated books with very few ratings are **penalized** to avoid overvaluing new/unknown books.
-- 
+  
 ## Results
 If you're interested in the results, you can find the output CSV file in this repository [here](https://github.com/Lushtrii/goodreads-ranker/blob/main/example_data/scored_book_data.csv).
